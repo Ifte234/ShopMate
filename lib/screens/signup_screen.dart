@@ -13,56 +13,122 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
-  TextEditingController emailC =TextEditingController();
+  TextEditingController emailC = TextEditingController();
   TextEditingController passC = TextEditingController();
   TextEditingController retypepasswordC = TextEditingController();
+  bool ispassword = true;
+  bool isretypepassword = true;
+
+  FocusNode? passwordfocus;
+  FocusNode? retypepasswordfocus;
+
+  final formkey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    emailC.dispose();
+    passC.dispose();
+    retypepasswordC.dispose();
+    super.dispose();
+  }
+
+  submit() async {
+    if(formkey.currentState!.validate()){
+      if(passC.text == retypepasswordC){
+
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-
-      body: SafeArea(child:
-      Container(
+      body: SafeArea(
+          child: Container(
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
           children: [
-            Text('WELCOME, \n PLEASE CREATE YOUR ACCOUNT',
-              textAlign: TextAlign.center,style: ShopMate.boldStyle,),
-            Form(child: Column(
-              children: [
-                MateFormField(
-                  controller: emailC,
-                  hintText: 'Enter Your Email',
-                ),
-                MateFormField(
-                  controller: passC,
-                  isPassword: true,
-                  hintText: 'Enter Your Password',
-                ),
-                MateFormField(
-                  controller: retypepasswordC,
-                  hintText: 'Retype Your Password',
-                  isPassword: true,
-                ),
-                MateButton(btnText: 'SIGNUP',isLoginBtn: false,),
-
-
-              ],
-            )),
-            MateButton(btnText: 'BACK TO LOGIN',
-              isLoginBtn: true, onPress: () {
+            Text(
+              'WELCOME, \n PLEASE CREATE YOUR ACCOUNT',
+              textAlign: TextAlign.center,
+              style: ShopMate.boldStyle,
+            ),
+            Form(
+                key: formkey,
+                child: Column(
+                  children: [
+                    MateFormField(
+                      controller: emailC,
+                      hintText: 'Enter Your Email',
+                      icon: Icon(Icons.email),
+                      inputAction: TextInputAction.next,
+                      validate: (v) {
+                        if (v!.isEmpty || !v.contains("@")) {
+                          return 'Please Enter Valid email ! \n Email is not Correct ';
+                        }
+                        return null;
+                      },
+                    ),
+                    MateFormField(
+                        controller: passC,
+                        isPassword: ispassword,
+                        hintText: 'Enter Your Password',
+                        inputAction: TextInputAction.next,
+                        focusNode: passwordfocus,
+                        validate: (v) {
+                          if (v!.isEmpty) {
+                            return "Password can't be null";
+                          }
+                          return null;
+                        },
+                        icon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              ispassword = !ispassword;
+                            });
+                          },
+                          icon: ispassword
+                              ? Icon(Icons.visibility)
+                              : Icon(Icons.visibility_off),
+                        )),
+                    MateFormField(
+                      controller: retypepasswordC,
+                      hintText: 'Retype Your Password',
+                      isPassword: isretypepassword,
+                      focusNode: retypepasswordfocus,
+                      validate: (v) {
+                        if (v!.isEmpty) {
+                          return "Password can't be Empty";
+                        }
+                      },
+                      icon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isretypepassword = !isretypepassword;
+                          });
+                        },
+                        icon: isretypepassword
+                            ? Icon(Icons.visibility)
+                            : Icon(Icons.visibility_off),
+                      ),
+                    ),
+                    MateButton(
+                        btnText: 'SIGNUP',
+                        isLoginBtn: false,
+                        onPress: () {
+                          submit();
+                        }),
+                  ],
+                )),
+            MateButton(
+              btnText: 'BACK TO LOGIN',
+              isLoginBtn: true,
+              onPress: () {
                 Navigator.pop(context);
               },
             )
           ],
-
         ),
-
-      )
-      ),
+      )),
     );
   }
 }
