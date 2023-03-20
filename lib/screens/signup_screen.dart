@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopmate/screens/login_screen.dart';
+import 'package:shopmate/services/firebase_services.dart';
 import 'package:shopmate/widgets/mateformfield.dart';
 
 import '../utils/contants.dart';
@@ -30,11 +31,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
     retypepasswordC.dispose();
     super.dispose();
   }
+  Future<void> ecoDialogue(String error) async{
+    showDialog(context: context, builder: (_){
+      return AlertDialog(
+        title: Text(error),
+        actions: [
+          MateButton(
+              onPress: (){
+            Navigator.pop(context);
+          },  btnText: 'CLOSE')
+        ],
+      );
+    });
+  }
+
 
   submit() async {
     if(formkey.currentState!.validate()){
-      if(passC.text == retypepasswordC){
-
+      if(passC.text == retypepasswordC.text){
+        FirebaseServices.createaccount(emailC.text, passC.text).then((value) => 
+        Navigator.push(context, MaterialPageRoute(builder: (_) =>LoginScreen() ))
+        );
+print('object');
+        return ecoDialogue('YES MATCHED');
       }
     }
   }
@@ -113,6 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     MateButton(
                         btnText: 'SIGNUP',
+                        isLoading : true,
                         isLoginBtn: false,
                         onPress: () {
                           submit();
