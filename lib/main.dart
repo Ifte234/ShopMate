@@ -2,9 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shopmate/screens/layout_screen.dart';
 import 'package:shopmate/screens/login_screen.dart';
 import 'package:shopmate/screens/signup_screen.dart';
 import 'package:shopmate/services/home_screen.dart';
+import 'package:sizer/sizer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,12 +37,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Sizer(
+        builder: (context, orientation, deviceType) {
+      return  MaterialApp(
       debugShowCheckedModeBanner: false,
       theme:
           ThemeData(colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(background: Colors.white)),
-      home:HomeScreen(),
+      home:LayoutScreen()
+      // HomeScreen(),
       // LoginScreen(),
     );
+
+        });
   }
 }
