@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import '../utils/contants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../widgets/home_card.dart';
+
 class HomeScreen extends StatelessWidget {
    HomeScreen({Key? key}) : super(key: key);
+   List categories =["GROCERY" , "PHARMACY" , "COSMETICS" , "ELECTRONICS"];
   List images=["https://cdn.pixabay.com/photo/2016/03/02/20/13/grocery-1232944_1280.jpg" ,
   "https://cdn.pixabay.com/photo/2019/07/13/16/44/woman-4335235_1280.jpg" ,
     "https://cdn.pixabay.com/photo/2018/01/25/08/14/beverages-3105631_1280.jpg" ,
@@ -17,72 +20,84 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Center(
-              child: Text(
-                'HOMESCREEN',
-                style: ShopMate.boldStyle,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  'HOMESCREEN',
+                  style: ShopMate.boldStyle,
+                ),
               ),
-            ),
-           CarouselSlider(items: images.map((e) => Stack(
-             children:[ Padding(
-               padding: const EdgeInsets.all(8.0),
-               child:
-               ClipRRect(
+             CarouselSlider(items: images.map((e) => Stack(
+               children:[ Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child:
+                 ClipRRect(
 
-                   borderRadius: BorderRadius.circular(19),
-                   child: Image.network(e,
-                   fit: BoxFit.cover,
-                   height: 200,
-                   width: 200,)),
-             ),
-               Padding(
-                   padding: const EdgeInsets.all(8.0),
-                   child:
-               Container(
-                 height: 200,
-                 width: 200,
-                 decoration: BoxDecoration(
                      borderRadius: BorderRadius.circular(19),
-                   gradient: LinearGradient(
-                     colors: [
-                       Colors.blueAccent.withOpacity(0.3),
-                       Colors.redAccent.withOpacity(0.3)
-                     
-                     ]
-                   )
-                 ),
-               )
+                     child: Image.network(e,
+                     fit: BoxFit.cover,
+                     height: 200,
+                     width: 200,)),
                ),
-               Positioned(
-                 top:3 ,
-                 left: 4,
-                 child: Padding(
-                   padding: const EdgeInsets.all(8.0),
-                   child: Container(
-                     decoration: BoxDecoration(
-                       color: Colors.black.withOpacity(0.6),
-                       borderRadius: BorderRadius.circular(7)
-                     ),
-                     child: Text('TITLE' , style: TextStyle(
-                       fontSize: 20,
-                       color: Colors.white
-                     ),
+                 Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child:
+                 Container(
+                   height: 200,
+                   width: 200,
+                   decoration: BoxDecoration(
+                       borderRadius: BorderRadius.circular(19),
+                     gradient: LinearGradient(
+                       colors: [
+                         Colors.blueAccent.withOpacity(0.3),
+                         Colors.redAccent.withOpacity(0.3)
+                       
+                       ]
+                     )
+                   ),
+                 )
+                 ),
+                 Positioned(
+                   bottom: 10,
+                   left: 15,
+                   child: Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: Container(
+                       padding: EdgeInsets.all(4),
+                       decoration: BoxDecoration(
+                         color: Colors.black.withOpacity(0.6),
+                         borderRadius: BorderRadius.circular(7)
+                       ),
+                       child: Text('TITLE' , style: TextStyle(
+                         fontSize: 20,
+                         color: Colors.white
+                       ),
+                       ),
                      ),
                    ),
                  ),
-               )
-           ])).toList(),
-               options: CarouselOptions(
-                 height: 200,
-                 autoPlay: true
-               ))
-            
-          ],
+             ])).toList(),
+                 options: CarouselOptions(
+                   height: 200,
+                   autoPlay: true
+                 )),
+              HomeCards(title: categories[0],),
+              HomeCards(title: categories[1],),
+              HomeCards(title: categories[2],),
+              HomeCards(title: categories[3],),
+              HomeCards(),
+              HomeCards(),
+              HomeCards(),
+              HomeCards(),
+              
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
