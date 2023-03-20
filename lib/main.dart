@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shopmate/screens/login_screen.dart';
 import 'package:shopmate/screens/signup_screen.dart';
+import 'package:shopmate/services/home_screen.dart';
 
 // Future<void> main() async {
   main(){
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme:
           ThemeData(colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(background: Colors.white)),
-      home: LoginScreen(),
+      home:HomeScreen(),
+      // LoginScreen(),
     );
   }
 }
